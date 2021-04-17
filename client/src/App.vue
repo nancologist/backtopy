@@ -1,17 +1,31 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HelloWorld :msg="title"/>
+    <div>
+      <p v-for="status in statuses" :key="status.id">{{ status.text }}</p>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/HelloWorld.vue';
+import axios from 'axios';
 
 export default {
   name: 'App',
+
+  data: () => ({
+    title: 'Status App',
+    statuses: []
+  }),
   components: {
     HelloWorld
+  },
+
+  created() {
+    axios.get('http://127.0.0.1:8000/statuses')
+      .then(res => { this.statuses = res.data })
+      .catch(err => { console.log(err); });
   }
 }
 </script>

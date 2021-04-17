@@ -27,6 +27,12 @@ async def index(request):
 async def index(request):
     return json(data, indent=2)
 
+@app.middleware("response")
+async def allow_cors(request, response):
+    response.headers["Access-Control-Allow-Origin"] = "http://localhost:8080"
+    response.headers["Access-Control-Allow-Methods"] = "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+
 
 if __name__ == "__main__":
     app.run()
