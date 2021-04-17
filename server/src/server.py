@@ -17,13 +17,13 @@ data = [
 ]
 # =================================
 
-app = Sanic("app_server_2021")
+app = Sanic("backtopy")
 
-@app.route('/')
+@app.route("/")
 async def index(request):
     return json({"hello": "world"})
 
-@app.route('/statuses')
+@app.route("/statuses")
 async def index(request):
     return json(data, indent=2)
 
