@@ -1,32 +1,18 @@
 from sanic import Sanic
 from sanic.response import json
 from elasticsearch_dsl.connections import connections
+from elasticsearch_dsl import Search
 from models.status import Status
 
 # ElasticSearch ===================
 connections.create_connection(hosts=["localhost"])
-
 Status.init()
-s1 = Status(
-    title="My Awesome Status",
-    text="I am very happy... it's longer than title of course..."
-)
-s1.save()
 
-# Fake DB =========================
-data = [
-    # status:
-    {
-        "id": "js32d",
-        "author": "John",
-        "text": 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren'
-    },
-    {
-        "id": 'xmk32',
-        "author": 'Sarah',
-        "text": "no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr"
-    }
-]
+s = Search(index="status_index")
+hits = s.execute()
+for hit in hits:
+    print(hit.meta.id, hit.title)
+
 # =================================
 
 app = Sanic("backtopy")
@@ -48,6 +34,4 @@ async def allow_cors(request, response):
     response.headers["Access-Control-Allow-Methods"] = "OPTIONS, GET, POST, PUT, PATCH, DELETE"
     response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
 
-
-# if __name__ == "__main__":
 app.run()
