@@ -2,7 +2,8 @@
   <div id="app">
     <HelloWorld :msg="title"/>
     <div>
-      <p v-for="status in statuses" :key="status.id">{{ status.text }}</p>
+      <p v-for="status in statuses" :key="status._id">{{ status._source.title }} : {{ status._source.text }}</p>
+      
     </div>
   </div>
 </template>

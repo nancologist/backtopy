@@ -8,11 +8,6 @@ from models.status import Status
 connections.create_connection(hosts=["localhost"])
 Status.init()
 
-s = Search(index="status_index")
-hits = s.execute()
-for hit in hits:
-    print(hit.meta.id, hit.title)
-
 # =================================
 
 app = Sanic("backtopy")
@@ -25,7 +20,9 @@ async def index(request):
 
 @app.route("/statuses")
 async def index(request):
-    return json(data, indent=2)
+    s = Search(index="status_index")
+    statuses = s.execute().to_dict()["hits"]["hits"]
+    return json(statuses, indent=2)
 
 
 @app.middleware("response")

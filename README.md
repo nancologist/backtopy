@@ -11,7 +11,7 @@
 
 ### 1.2. Dependencies
 * [Sanic](https://sanicframework.org/)
-
+* [Elasticsearch DSL](https://elasticsearch-dsl.readthedocs.io/)
 ___
 
 ## 2. Database (Elasticsearch)
