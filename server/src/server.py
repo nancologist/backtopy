@@ -1,5 +1,17 @@
 from sanic import Sanic
 from sanic.response import json
+from elasticsearch_dsl.connections import connections
+from models.status import Status
+
+# ElasticSearch ===================
+connections.create_connection(hosts=["localhost"])
+
+Status.init()
+s1 = Status(
+    title="My Awesome Status",
+    text="I am very happy... it's longer than title of course..."
+)
+s1.save()
 
 # Fake DB =========================
 data = [
@@ -19,13 +31,16 @@ data = [
 
 app = Sanic("backtopy")
 
+
 @app.route("/")
 async def index(request):
     return json({"hello": "world"})
 
+
 @app.route("/statuses")
 async def index(request):
     return json(data, indent=2)
+
 
 @app.middleware("response")
 async def allow_cors(request, response):
@@ -34,5 +49,5 @@ async def allow_cors(request, response):
     response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
 
 
-if __name__ == "__main__":
-    app.run()
+# if __name__ == "__main__":
+app.run()
