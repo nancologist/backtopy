@@ -35,7 +35,7 @@ async def add_status(req):
 
 @app.delete("/status/<status_id>")
 async def delete_status(req, status_id):
-    status = Status(id=status_id)
+    status = Status.get(id=status_id)
     status.delete()
     return json({})
 
