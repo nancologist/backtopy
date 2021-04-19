@@ -59,7 +59,12 @@ export default {
       const confirmed = confirm('Are you sure?');
       if (confirmed) {
         axios.delete(`/status/${id}`)
-          .then(res => { console.log(res); })
+          .then(res => {
+            if (res.status === 200) {
+              this.statuses = this.statuses.filter(item => item._id !== id)
+              console.log(this.statuses);
+            }
+          })
           .catch(err => { console.log(err); });
       }
     }
