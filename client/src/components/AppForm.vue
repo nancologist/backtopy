@@ -18,6 +18,8 @@ export default {
     methods: {
         handleSubmit() {
             this.$emit('form-submitted', this.status)
+            this.status.title = '';
+            this.status.text = '';
         }
     }
 }
