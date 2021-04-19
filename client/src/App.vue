@@ -10,7 +10,7 @@
 <script>
 import AppForm from './components/AppForm';
 import Card from './components/Card';
-import axios from 'axios';
+import axios from './axios';
 
 export default {
   name: 'App',
@@ -34,7 +34,7 @@ export default {
   methods: {
     postStatus(status) {
       status = JSON.stringify(status)
-      axios.post('http://127.0.0.1:8000/status', status)
+      axios.post('/status', status)
         .then(res => {
           if (res.status === 201) {
             alert('Status successfully stored.');
@@ -45,7 +45,7 @@ export default {
     },
 
     getAllStatuses() {
-      axios.get('http://127.0.0.1:8000/statuses')
+      axios.get('/statuses')
         .then(res => { this.statuses = res.data })
         .catch(err => { console.log(err); });
     }
