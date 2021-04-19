@@ -3,17 +3,13 @@
     <h1>Status App</h1>
     <AppForm @form-submitted="postStatus" />
     <hr>
-    <div>
-      <div class="card" v-for="status in statuses" :key="status._id">
-        <h3>{{ status._source.title }}</h3>
-        <span>{{ status._source.text }}</span>
-      </div>
-    </div>
+    <Card v-for="status in statuses" :key="status._id" :status="status" />
   </div>
 </template>
 
 <script>
 import AppForm from './components/AppForm';
+import Card from './components/Card';
 import axios from 'axios';
 
 export default {
@@ -27,7 +23,8 @@ export default {
   },
 
   components: {
-    AppForm
+    AppForm,
+    Card
   },
 
   created() {
@@ -64,14 +61,5 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
-
-.card {
-  border: 1px solid gray;
-  border-radius: 5px;
-  box-shadow: 1px 1px 1px gray;
-  margin: 10px auto;
-  padding: 10px;
-  width: 600px;
 }
 </style>
