@@ -2,13 +2,20 @@
     <div class="card">
         <h3>{{ status._source.title }}</h3>
         <span>{{ status._source.text }}</span>
-        <button class="card__del-btn">X</button>
+        <button class="card__del-btn" @click="onDelete">X</button>
     </div>
 </template>
 
 <script>
 export default {
-    props: ['status']
+    props: ['status'],
+    
+    methods: {
+      onDelete() {
+        const id = this.status._id;
+        this.$emit('ondelete', id);
+      }
+    }
 }
 </script>
 

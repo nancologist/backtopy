@@ -3,7 +3,12 @@
     <h1>Status App</h1>
     <AppForm @form-submitted="postStatus" />
     <hr>
-    <Card v-for="status in statuses" :key="status._id" :status="status" />
+    <Card
+      v-for="status in statuses"
+      :key="status._id"
+      :status="status"
+      @ondelete="deleteStatus($event)"
+    />
   </div>
 </template>
 
@@ -32,6 +37,12 @@ export default {
   },
 
   methods: {
+    getAllStatuses() {
+      axios.get('/statuses')
+        .then(res => { this.statuses = res.data })
+        .catch(err => { console.log(err); });
+    },
+
     postStatus(status) {
       status = JSON.stringify(status)
       axios.post('/status', status)
@@ -44,10 +55,13 @@ export default {
         .catch(err => { console.log(err); });
     },
 
-    getAllStatuses() {
-      axios.get('/statuses')
-        .then(res => { this.statuses = res.data })
-        .catch(err => { console.log(err); });
+    deleteStatus(id) {
+      const confirmed = confirm('Are you sure?');
+      if (confirmed) {
+        axios.delete(`/status/${id}`)
+          .then(res => { console.log(res); })
+          .catch(err => { console.log(err); });
+      }
     }
   }
 }
