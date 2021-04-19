@@ -1,4 +1,5 @@
-# BackToPy
+# Status App
+In this application the client can create, read, update and delete Statuses.
 
 ## 1. Server (Sanic)
 
