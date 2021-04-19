@@ -1,7 +1,7 @@
 <template>
     <form class="form" @submit.prevent="handleSubmit">
-      <input class="form__ctrl title" v-model="title" type="text" placeholder="Choose a title for your status" />
-      <textarea class="form__ctrl text" v-model="text" placeholder="Describe your status..."></textarea>
+      <input class="form__ctrl title" v-model="status.title" type="text" placeholder="Choose a title for your status" />
+      <textarea class="form__ctrl text" v-model="status.text" placeholder="Describe your status..."></textarea>
       <button class="form__btn" type="submit">POST</button>
     </form>
 </template>
@@ -9,11 +9,17 @@
 <script>
 export default {
     data: () => ({
-        title: '',
-        text: ''
+        status: {
+            title: '',
+            text: ''
+        }
     }),
 
-    methods: {}
+    methods: {
+        handleSubmit() {
+            this.$emit('form-submitted', this.status)
+        }
+    }
 }
 </script>
 

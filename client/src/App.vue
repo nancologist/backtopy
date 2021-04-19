@@ -1,32 +1,48 @@
 <template>
   <div id="app">
-    <HelloWorld :msg="title"/>
+    <h1>Status App</h1>
+    <AppForm @form-submitted="postStatus" />
+    <hr>
     <div>
-      <p v-for="status in statuses" :key="status._id">{{ status._source.title }} : {{ status._source.text }}</p>
-      
+      <div class="card" v-for="status in statuses" :key="status._id">
+        <h3>{{ status._source.title }}</h3>
+        <span>{{ status._source.text }}</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import AppForm from './components/AppForm';
 import axios from 'axios';
 
 export default {
   name: 'App',
 
-  data: () => ({
-    title: 'Status App',
-    statuses: []
-  }),
+  data() {
+    return {
+      title: 'Status App',
+      statuses: []
+    }
+  },
+
   components: {
-    HelloWorld
+    AppForm
   },
 
   created() {
     axios.get('http://127.0.0.1:8000/statuses')
       .then(res => { this.statuses = res.data })
       .catch(err => { console.log(err); });
+  },
+
+  methods: {
+    postStatus(status) {
+      status = JSON.stringify(status)
+      axios.post('http://127.0.0.1:8000/status', status)
+        .then(res => { console.log(res); })
+        .catch(err => { console.log(err); });
+    }
   }
 }
 </script>
@@ -39,5 +55,14 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.card {
+  border: 1px solid gray;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px gray;
+  margin: auto;
+  padding: 10px;
+  width: 600px;
 }
 </style>
