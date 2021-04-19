@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1>Status App</h1>
-    <AppForm @form-submitted="postStatus" />
+    <AppForm @form-submitted="postStatus" :editing="editing" />
     <hr>
     <Card
       v-for="status in statuses"
@@ -23,7 +23,8 @@ export default {
   data() {
     return {
       title: 'Status App',
-      statuses: []
+      statuses: [],
+      editing: false
     }
   },
 

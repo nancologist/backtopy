@@ -2,7 +2,8 @@
     <div class="card">
         <h3>{{ status._source.title }}</h3>
         <span>{{ status._source.text }}</span>
-        <button class="card__del-btn" @click="onDelete">X</button>
+        <button class="card__action-btn delete" @click="onDelete">X</button>
+        <button class="card__action-btn update" @click="onDelete">E</button>
     </div>
 </template>
 
@@ -14,6 +15,10 @@ export default {
       onDelete() {
         const id = this.status._id;
         this.$emit('ondelete', id);
+      },
+
+      onEdit() {
+        
       }
     }
 }
@@ -30,8 +35,7 @@ export default {
   width: 600px;
 }
 
-.card__del-btn {
-  background-color: red;
+.card__action-btn {
   border: none;
   border-radius: 50%;
   box-shadow: none;
@@ -39,7 +43,16 @@ export default {
   cursor: pointer;
   line-height: 1.4;
   position: absolute;
-  right: 1%;
   top: 5%;
+}
+
+.delete {
+  background-color: red;
+  right: 1%;
+}
+
+.update {
+  background-color: orange;
+  right: 5%;
 }
 </style>

@@ -2,7 +2,7 @@
     <form class="form" @submit.prevent="handleSubmit">
       <input class="form__ctrl title" v-model="status.title" type="text" placeholder="Choose a title for your status" />
       <textarea class="form__ctrl text" v-model="status.text" placeholder="Describe your status..."></textarea>
-      <button class="form__btn" type="submit">POST</button>
+      <button class="form__btn" :class="submitClass" type="submit">POST</button>
     </form>
 </template>
 
@@ -15,11 +15,22 @@ export default {
         }
     }),
 
+    prop: ['editing'],
+
     methods: {
         handleSubmit() {
             this.$emit('form-submitted', this.status)
             this.status.title = '';
             this.status.text = '';
+        }
+    },
+
+    computed: {
+        submitClass() {
+            return {
+                post: !this.editing,
+                edit: this.editing
+            }
         }
     }
 }
@@ -37,13 +48,6 @@ export default {
     margin: 10px 0;
 }
 
-.form__btn {
-    display: inline;
-    font-weight: 600;
-    margin: auto;
-    padding: 10px 20px;
-}
-
 .title {
     height: 30px;
     padding: 5px 10px;
@@ -52,5 +56,30 @@ export default {
 .text {
     height: 100px;
     padding: 10px;
+}
+
+.form__btn {
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline;
+    font-weight: 600;
+    margin: auto;
+    padding: 10px 20px;
+}
+
+.form__btn:hover {
+    background-color: #f4f4f4;
+}
+
+.post {
+    color: darkgreen;
+    border: 2px solid darkgreen;
+}
+
+.edit {
+    color: orangered;
+    border: 2px solid orangered;
 }
 </style>
