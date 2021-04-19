@@ -31,16 +31,25 @@ export default {
   },
 
   created() {
-    axios.get('http://127.0.0.1:8000/statuses')
-      .then(res => { this.statuses = res.data })
-      .catch(err => { console.log(err); });
+    this.getAllStatuses()
   },
 
   methods: {
     postStatus(status) {
       status = JSON.stringify(status)
       axios.post('http://127.0.0.1:8000/status', status)
-        .then(res => { console.log(res); })
+        .then(res => {
+          if (res.status === 201) {
+            alert('Status successfully stored.');
+            this.getAllStatuses()
+          }
+        })
+        .catch(err => { console.log(err); });
+    },
+
+    getAllStatuses() {
+      axios.get('http://127.0.0.1:8000/statuses')
+        .then(res => { this.statuses = res.data })
         .catch(err => { console.log(err); });
     }
   }
@@ -61,7 +70,7 @@ export default {
   border: 1px solid gray;
   border-radius: 5px;
   box-shadow: 1px 1px 1px gray;
-  margin: auto;
+  margin: 10px auto;
   padding: 10px;
   width: 600px;
 }

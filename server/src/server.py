@@ -26,8 +26,12 @@ async def get_statuses(request):
 
 @app.post("/status")
 async def add_status(request):
-    new_status = request.json
-    return json({"msg": "ok"})
+    new_status = Status(
+        title=request.json.get("title"),
+        text=request.json.get("text")
+    )
+    new_status.save()
+    return json({"msg": "ok"}, status=201)
 
 
 @app.middleware("response")
