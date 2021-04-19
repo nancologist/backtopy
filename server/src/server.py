@@ -4,11 +4,9 @@ from elasticsearch_dsl.connections import connections
 from elasticsearch_dsl import Search
 from models.status import Status
 
-# ElasticSearch ===================
+# ElasticSearch
 connections.create_connection(hosts=["localhost"])
 Status.init()
-
-# =================================
 
 app = Sanic("status-app")
 
