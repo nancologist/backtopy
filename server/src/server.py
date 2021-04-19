@@ -31,6 +31,7 @@ async def add_status(req):
     new_status.save()
     return json({}, status=201)
 
+
 @app.delete("/status/<status_id>")
 async def delete_status(req, status_id):
     status = Status.get(id=status_id)
@@ -42,6 +43,7 @@ async def delete_status(req, status_id):
 async def handle_preflight_reqs(req):
     if req.method == "OPTIONS":
         return empty()
+
 
 @app.middleware("response")
 async def allow_cors(req, res):
