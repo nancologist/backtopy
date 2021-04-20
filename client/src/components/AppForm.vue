@@ -1,8 +1,23 @@
 <template>
     <form class="form" @submit.prevent="handleSubmit">
-      <input class="form__ctrl title" v-model="status.title" type="text" placeholder="Choose a title for your status" />
-      <textarea class="form__ctrl text" v-model="status.text" placeholder="Describe your status..."></textarea>
-      <button class="form__btn" :class="submitClass" type="submit">POST</button>
+      <input
+        class="form__ctrl title"
+        v-model="status.title"
+        type="text"
+        placeholder="Choose a title for your status"
+      />
+      <textarea
+        class="form__ctrl text"
+        v-model="status.text"
+        placeholder="Describe your status..."
+      ></textarea>
+      <button
+        class="form__btn"
+        :class="submitClass"
+        type="submit"
+      >
+          {{!!editingStatus ? 'EDIT' : 'POST' }}
+      </button>
     </form>
 </template>
 
@@ -15,7 +30,7 @@ export default {
         }
     }),
 
-    prop: ['editing'],
+    props: ['editingStatus'],
 
     methods: {
         handleSubmit() {
@@ -28,9 +43,17 @@ export default {
     computed: {
         submitClass() {
             return {
-                post: !this.editing,
-                edit: this.editing
+                'on-post': !this.editingStatus,
+                'on-edit': !!this.editingStatus
             }
+        }
+    },
+
+    watch: {
+        editingStatus(val) {
+            const { _source: { text, title } } = val;
+            this.status.title = title;
+            this.status.text = text;
         }
     }
 }
@@ -73,12 +96,12 @@ export default {
     background-color: #f4f4f4;
 }
 
-.post {
+.on-post {
     color: darkgreen;
     border: 2px solid darkgreen;
 }
 
-.edit {
+.on-edit {
     color: orangered;
     border: 2px solid orangered;
 }

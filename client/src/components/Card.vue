@@ -1,15 +1,21 @@
 <template>
-    <div class="card">
+    <div class="card" :style="grayedOut">
         <h3>{{ status._source.title }}</h3>
         <span>{{ status._source.text }}</span>
         <button class="card__action-btn delete" @click="onDelete">X</button>
-        <button class="card__action-btn update" @click="onDelete">E</button>
+        <button class="card__action-btn update" @click="onEdit">E</button>
     </div>
 </template>
 
 <script>
 export default {
-    props: ['status'],
+    props: ['status', 'isEditing'],
+
+    data() {
+      return {
+        grayedOut: {}
+      }
+    },
     
     methods: {
       onDelete() {
@@ -18,7 +24,18 @@ export default {
       },
 
       onEdit() {
-        
+        const id = this.status._id;
+        this.$emit('onedit', id);
+      },
+    },
+
+    watch: {
+      isEditing(val) {
+        if (val) {
+          this.grayedOut = { opacity: 0.6 };
+        } else {
+          this.grayedOut = {}
+        }
       }
     }
 }

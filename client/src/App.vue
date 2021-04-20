@@ -1,13 +1,15 @@
 <template>
   <div id="app">
     <h1>Status App</h1>
-    <AppForm @form-submitted="postStatus" :editing="editing" />
+    <AppForm @form-submitted="postStatus" :editingStatus="editingStatus" />
     <hr>
     <Card
       v-for="status in statuses"
       :key="status._id"
       :status="status"
+      :isEditing="editingStatus && status._id === editingStatus._id"
       @ondelete="deleteStatus($event)"
+      @onedit="startEditStatus($event)"
     />
   </div>
 </template>
@@ -24,7 +26,7 @@ export default {
     return {
       title: 'Status App',
       statuses: [],
-      editing: false
+      editingStatus: undefined
     }
   },
 
@@ -54,6 +56,10 @@ export default {
           }
         })
         .catch(err => { console.log(err); });
+    },
+
+    startEditStatus(id) {
+      this.editingStatus = this.statuses.find(item => item._id === id);
     },
 
     deleteStatus(id) {
