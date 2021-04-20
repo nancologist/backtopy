@@ -34,6 +34,10 @@ export default {
 
     methods: {
         handleSubmit() {
+            if (this.editingStatus) {
+                this.status.id = this.editingStatus._id;
+            }
+
             this.$emit('form-submitted', this.status)
             this.status.title = '';
             this.status.text = '';
@@ -51,6 +55,7 @@ export default {
 
     watch: {
         editingStatus(val) {
+            if (!this.editingStatus) return;
             const { _source: { text, title } } = val;
             this.status.title = title;
             this.status.text = text;

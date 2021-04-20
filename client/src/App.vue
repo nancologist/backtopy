@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1>Status App</h1>
-    <AppForm @form-submitted="postStatus" :editingStatus="editingStatus" />
+    <AppForm @form-submitted="handleFormSubmit" :editingStatus="editingStatus" />
     <hr>
     <Card
       v-for="status in statuses"
@@ -40,6 +40,18 @@ export default {
   },
 
   methods: {
+    handleFormSubmit(status) {
+      if (!this.editingStatus) {
+        this.postStatus(status)
+      } else {
+        this.updateStatus(status)
+      }
+    },
+
+    startEditStatus(id) {
+      this.editingStatus = this.statuses.find(item => item._id === id);
+    },
+
     getAllStatuses() {
       axios.get('/statuses')
         .then(res => { this.statuses = res.data })
@@ -52,14 +64,23 @@ export default {
         .then(res => {
           if (res.status === 201) {
             alert('Status successfully stored.');
-            this.getAllStatuses()
+            this.getAllStatuses();
           }
         })
         .catch(err => { console.log(err); });
     },
 
-    startEditStatus(id) {
-      this.editingStatus = this.statuses.find(item => item._id === id);
+    updateStatus(status) {
+      status = JSON.stringify(status)
+      axios.put('/status', status)
+        .then(res => {
+          this.editingStatus = undefined;
+          if (res.status === 200) {
+            alert('Status successfully updated.');
+            this.getAllStatuses();
+          }
+        })
+        .catch(err => { console.log(err); });
     },
 
     deleteStatus(id) {
