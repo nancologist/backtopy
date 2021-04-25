@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
     data: () => ({
         status: {
@@ -29,8 +31,6 @@ export default {
             text: ''
         }
     }),
-
-    props: ['statusOnEdit'],
 
     methods: {
         handleSubmit() {
@@ -50,7 +50,11 @@ export default {
                 'on-post': !this.statusOnEdit,
                 'on-edit': !!this.statusOnEdit
             }
-        }
+        },
+
+        ...mapState([
+            'statusOnEdit'
+        ])
     },
 
     watch: {

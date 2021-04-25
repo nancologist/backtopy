@@ -1,15 +1,13 @@
 <template>
   <div id="app">
     <h1>Status App</h1>
-    <AppForm @form-submitted="handleFormSubmit" :statusOnEdit="statusOnEdit" />
+    <AppForm @form-submitted="handleFormSubmit" />
     <hr>
     <Card
       v-for="status in statuses"
       :key="status._id"
       :status="status"
-      :isEditing="statusOnEdit && status._id === statusOnEdit._id"
       @ondelete="deleteStatus($event)"
-      @onedit="startEditStatus($event)"
     />
   </div>
 </template>
@@ -36,10 +34,6 @@ export default {
   computed: {
     statuses() {
       return this.$store.state.statuses;
-    },
-
-    statusOnEdit() {
-      return this.$store.state.statusOnEdit;
     }
   },
 

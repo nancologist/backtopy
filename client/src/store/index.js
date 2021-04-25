@@ -15,7 +15,7 @@ export const store = new Vuex.Store({
       state.statuses = statuses;
     },
 
-    getStatusById(state, id) {
+    setStatusOnEdit(state, id) {
       state.statusOnEdit = state.statuses.find(item => item._id === id)
     }
   },

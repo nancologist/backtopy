@@ -9,11 +9,17 @@
 
 <script>
 export default {
-    props: ['status', 'isEditing'],
+    props: ['status'],
 
-    data() {
-      return {
-        grayedOut: {}
+    computed: {
+      grayedOut() {
+        const sOnEdit = this.$store.state.statusOnEdit;
+        const isEditingCard = !!sOnEdit && 
+          this.status._id === sOnEdit._id;
+        if (isEditingCard) {
+          return { opacity: 0.6 }
+        }
+        return {};
       }
     },
     
@@ -25,19 +31,9 @@ export default {
 
       onEdit() {
         const id = this.status._id;
-        this.$emit('onedit', id);
+        this.$store.commit('setStatusOnEdit', id);
       },
     },
-
-    watch: {
-      isEditing(val) {
-        if (val) {
-          this.grayedOut = { opacity: 0.6 };
-        } else {
-          this.grayedOut = {}
-        }
-      }
-    }
 }
 </script>
 
