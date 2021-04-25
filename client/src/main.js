@@ -6,6 +6,7 @@ import './assets/css/main.css';
 Vue.config.productionTip = false
 
 new Vue({
-  store,
+  el: '#app',
+  store: store,
   render: h => h(App),
 }).$mount('#app')

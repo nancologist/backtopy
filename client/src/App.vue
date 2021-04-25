@@ -11,7 +11,6 @@
       @ondelete="deleteStatus($event)"
       @onedit="startEditStatus($event)"
     />
-    <p>{{test}}</p>
   </div>
 </template>
 
@@ -19,6 +18,7 @@
 import AppForm from './components/AppForm';
 import Card from './components/Card';
 import axios from './axios';
+// import { mapState } from 'vuex';
 
 export default {
   name: 'App',
@@ -26,9 +26,7 @@ export default {
   data() {
     return {
       title: 'Status App',
-      statuses: [],
       editingStatus: undefined,
-      test: this.$store.state.test
     }
   },
 
@@ -37,8 +35,14 @@ export default {
     Card
   },
 
+  computed: {
+    statuses() {
+      return this.$store.state.statuses
+    }
+  },
+
   created() {
-    this.getAllStatuses()
+    this.$store.dispatch('fetchAllStatuses')
   },
 
   methods: {
@@ -55,9 +59,6 @@ export default {
     },
 
     getAllStatuses() {
-      axios.get('/statuses')
-        .then(res => { this.statuses = res.data })
-        .catch(err => { console.log(err); });
     },
 
     postStatus(status) {
