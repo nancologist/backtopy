@@ -11,6 +11,7 @@
       @ondelete="deleteStatus($event)"
       @onedit="startEditStatus($event)"
     />
+    <p>{{test}}</p>
   </div>
 </template>
 
@@ -26,7 +27,8 @@ export default {
     return {
       title: 'Status App',
       statuses: [],
-      editingStatus: undefined
+      editingStatus: undefined,
+      test: this.$store.state.test
     }
   },
 
