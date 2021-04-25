@@ -16,7 +16,7 @@
         :class="submitClass"
         type="submit"
       >
-          {{!!editingStatus ? 'EDIT' : 'POST' }}
+          {{!!statusOnEdit ? 'EDIT' : 'POST' }}
       </button>
     </form>
 </template>
@@ -30,12 +30,12 @@ export default {
         }
     }),
 
-    props: ['editingStatus'],
+    props: ['statusOnEdit'],
 
     methods: {
         handleSubmit() {
-            if (this.editingStatus) {
-                this.status.id = this.editingStatus._id;
+            if (this.statusOnEdit) {
+                this.status.id = this.statusOnEdit._id;
             }
 
             this.$emit('form-submitted', this.status)
@@ -47,15 +47,15 @@ export default {
     computed: {
         submitClass() {
             return {
-                'on-post': !this.editingStatus,
-                'on-edit': !!this.editingStatus
+                'on-post': !this.statusOnEdit,
+                'on-edit': !!this.statusOnEdit
             }
         }
     },
 
     watch: {
-        editingStatus(val) {
-            if (!this.editingStatus) return;
+        statusOnEdit(val) {
+            if (!this.statusOnEdit) return;
             const { _source: { text, title } } = val;
             this.status.title = title;
             this.status.text = text;

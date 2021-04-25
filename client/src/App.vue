@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <h1>Status App</h1>
-    <AppForm @form-submitted="handleFormSubmit" :editingStatus="editingStatus" />
+    <AppForm @form-submitted="handleFormSubmit" :statusOnEdit="statusOnEdit" />
     <hr>
     <Card
       v-for="status in statuses"
       :key="status._id"
       :status="status"
-      :isEditing="editingStatus && status._id === editingStatus._id"
+      :isEditing="statusOnEdit && status._id === statusOnEdit._id"
       @ondelete="deleteStatus($event)"
       @onedit="startEditStatus($event)"
     />
@@ -18,7 +18,6 @@
 import AppForm from './components/AppForm';
 import Card from './components/Card';
 import axios from './axios';
-// import { mapState } from 'vuex';
 
 export default {
   name: 'App',
@@ -26,7 +25,6 @@ export default {
   data() {
     return {
       title: 'Status App',
-      editingStatus: undefined,
     }
   },
 
@@ -37,7 +35,11 @@ export default {
 
   computed: {
     statuses() {
-      return this.$store.state.statuses
+      return this.$store.state.statuses;
+    },
+
+    statusOnEdit() {
+      return this.$store.state.statusOnEdit;
     }
   },
 
@@ -47,7 +49,7 @@ export default {
 
   methods: {
     handleFormSubmit(status) {
-      if (!this.editingStatus) {
+      if (!this.statusOnEdit) {
         this.postStatus(status)
       } else {
         this.updateStatus(status)
@@ -55,7 +57,7 @@ export default {
     },
 
     startEditStatus(id) {
-      this.editingStatus = this.statuses.find(item => item._id === id);
+      this.$store.commit('getStatusById', id);
     },
 
     getAllStatuses() {
@@ -77,7 +79,7 @@ export default {
       status = JSON.stringify(status)
       axios.put('/status', status)
         .then(res => {
-          this.editingStatus = undefined;
+          this.statusOnEdit = undefined;
           if (res.status === 200) {
             alert('Status successfully updated.');
             this.getAllStatuses();

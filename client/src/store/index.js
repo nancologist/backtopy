@@ -13,6 +13,10 @@ export const store = new Vuex.Store({
   mutations: {
     getStatuses(state, statuses) {
       state.statuses = statuses;
+    },
+
+    getStatusById(state, id) {
+      state.statusOnEdit = state.statuses.find(item => item._id === id)
     }
   },
 
