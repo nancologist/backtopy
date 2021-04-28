@@ -72,7 +72,7 @@ export default {
 .form {
     display: flex;
     flex-direction: column;
-    margin: auto;
+    margin: 10px auto;
     width: 500px;
 }
 

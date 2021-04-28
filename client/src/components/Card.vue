@@ -43,7 +43,7 @@ export default {
   border-radius: 5px;
   box-shadow: 1px 1px 1px gray;
   margin: 10px auto;
-  padding: 10px;
+  padding: 20px;
   position: relative;
   width: 600px;
 }
@@ -54,9 +54,10 @@ export default {
   box-shadow: none;
   color: white;
   cursor: pointer;
-  line-height: 1.4;
+  line-height: 0.6;
   position: absolute;
-  top: 5%;
+  padding: 5px;
+  top: 7%;
 }
 
 .delete {
