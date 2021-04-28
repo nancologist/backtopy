@@ -11,13 +11,18 @@
         v-model="status.text"
         placeholder="Describe your status..."
       ></textarea>
-      <button
-        class="form__btn"
-        :class="submitClass"
-        type="submit"
-      >
-          {{!!statusOnEdit ? 'EDIT' : 'POST' }}
-      </button>
+      <div class="form__actions">
+            <button
+                class="form__btn cancel" 
+                v-if="!!statusOnEdit"
+                @click="cancelEdit"
+            >Cancel</button>
+            <button
+                class="form__btn"
+                :class="submitClass"
+                type="submit"
+            >{{!!statusOnEdit ? 'EDIT' : 'POST' }}</button>
+      </div>
     </form>
 </template>
 
@@ -41,6 +46,12 @@ export default {
             this.$emit('form-submitted', this.status)
             this.status.title = '';
             this.status.text = '';
+        },
+
+        cancelEdit() {
+            this.status.title = '';
+            this.status.text = '';
+            this.$store.commit('cancelStatusOnEdit');
         }
     },
 
@@ -113,5 +124,11 @@ export default {
 .on-edit {
     color: orangered;
     border: 2px solid orangered;
+}
+
+.cancel {
+    color: rgb(85, 84, 84);
+    border: 2px solid gray;
+    margin-right: 5px;
 }
 </style>
