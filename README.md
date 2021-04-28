@@ -34,3 +34,5 @@ ___
 ### 3.2. Dependencies
 * Vue CLI
 * Axios
+* Vuex
+* Vue Router

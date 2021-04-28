@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <h1>Status App</h1>
+    <router-view></router-view>
     <AppForm @form-submitted="handleFormSubmit" />
     <hr>
     <Card
