@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>Status App</h1>
+    <Navigation />
     <router-view></router-view>
     <AppForm @form-submitted="handleFormSubmit" />
     <hr>
@@ -14,9 +14,11 @@
 </template>
 
 <script>
+import axios from './axios';
+
+import Navigation from './components/Navigation';
 import AppForm from './components/AppForm';
 import Card from './components/Card';
-import axios from './axios';
 
 export default {
   name: 'App',
@@ -28,6 +30,7 @@ export default {
   },
 
   components: {
+    Navigation,
     AppForm,
     Card
   },
