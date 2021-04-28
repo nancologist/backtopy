@@ -21,6 +21,10 @@ export const store = new Vuex.Store({
 
     cancelStatusOnEdit(state) {
       state.statusOnEdit = undefined;
+    },
+
+    removeStatus(state, id) {
+      state.statuses = state.statuses.filter(item => item._id !== id)
     }
   },
 

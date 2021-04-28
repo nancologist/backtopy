@@ -51,7 +51,7 @@ export default {
         cancelEdit() {
             this.status.title = '';
             this.status.text = '';
-            this.$store.commit('cancelStatusOnEdit');
+            this.$emit('cancel-edit');
         }
     },
 

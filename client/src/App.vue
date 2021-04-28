@@ -2,7 +2,10 @@
   <div id="app">
     <Navigation />
     <router-view></router-view>
-    <AppForm @form-submitted="handleFormSubmit" />
+    <AppForm
+      @form-submitted="handleFormSubmit"
+      @cancel-edit="cancelEditStatus"
+    />
     <hr>
     <Card
       v-for="status in statuses"
@@ -58,7 +61,8 @@ export default {
       this.$store.commit('getStatusById', id);
     },
 
-    getAllStatuses() {
+    cancelEditStatus() {
+      this.$store.commit('cancelStatusOnEdit');
     },
 
     postStatus(status) {
@@ -92,7 +96,7 @@ export default {
         axios.delete(`/status/${id}`)
           .then(res => {
             if (res.status === 200) {
-              this.statuses = this.statuses.filter(item => item._id !== id)
+              this.$store.commit('removeStatus', id)
               console.log(this.statuses);
             }
           })
